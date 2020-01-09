@@ -169,61 +169,10 @@
  * But now sp_go DO verify magic/hcrc/dcrc in the quick sunplus uIamge header.
  * So the address passed for sp_go must have header in it.
  */
+
 #undef CONFIG_BOOTCOMMAND
-/*
 #define CONFIG_BOOTCOMMAND "run distro_bootcmd"
-*/
-#define CONFIG_BOOTCOMMAND "run boot_normal"
-#undef CONFIG_BOOTCOMMAND2
-#define CONFIG_BOOTCOMMAND2 \
-"echo [scr] bootcmd started; " \
-"md.l ${bootinfo_base} 1; " \
-"if itest.l *${bootinfo_base} == " __stringify(SPI_NOR_BOOT) "; then " \
-	"if itest ${if_zebu} == 1; then " \
-		"if itest ${if_qkboot} == 1; then " \
-			"echo [scr] qk zmem boot; " \
-			"run qk_zmem_boot; " \
-		"else " \
-			"echo [scr] zmem boot; " \
-			"run zmem_boot; " \
-		"fi; " \
-	"else " \
-		"if itest ${if_qkboot} == 1; then " \
-			"echo [scr] qk romter boot; " \
-			"run qk_romter_boot; " \
-		"elif itest.s ${sp_main_storage} == tftp; then " \
-			"echo [scr] tftp_boot; " \
-			"run tftp_boot; " \
-		"else " \
-			"echo [scr] romter boot; " \
-			"run romter_boot; " \
-		"fi; " \
-	"fi; " \
-"elif itest.l *${bootinfo_base} == " __stringify(EMMC_BOOT) "; then " \
-	"if itest ${if_zebu} == 1; then " \
-		"echo [scr] zebu emmc boot; " \
-		"run zebu_emmc_boot; " \
-	"else " \
-		"if itest ${if_qkboot} == 1; then " \
-			"echo [scr] qk emmc boot; " \
-			"run qk_emmc_boot; " \
-		"else " \
-			"echo [scr] emmc boot; " \
-			"run emmc_boot; " \
-		"fi; " \
-	"fi; " \
-"elif itest.l *${bootinfo_base} == " __stringify(SPINAND_BOOT) "; then " \
-	"echo [scr] nand boot; " \
-	"run nand_boot; " \
-"elif itest.l *${bootinfo_base} == " __stringify(USB_ISP) "; then " \
-	"echo [scr] ISP from USB storage; " \
-	"run isp_usb; " \
-"elif itest.l *${bootinfo_base} == " __stringify(SDCARD_ISP) "; then " \
-	"echo [scr] ISP from SD Card; " \
-	"run isp_sdcard; " \
-"else " \
-	"echo Stop; " \
-"fi"
+/*#define CONFIG_BOOTCOMMAND "run boot_normal"*/
 
 #define DSTADDR_KERNEL		0x307FC0 /* if stext is on 0x308000 */
 #define DSTADDR_DTB		0x2FFFC0
